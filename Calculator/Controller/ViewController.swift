@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
     
+    private var calculatorLogic = CalculatorLogic()
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         
         // collapse/expand: opt + cmd + <-/->
@@ -25,12 +26,11 @@ class ViewController: UIViewController {
         
         isFinishedTypingNumber = true
         
+        
         if let calcMethod = sender.currentTitle {
-            switch(calcMethod) {
-            case("AC"): displayValue = displayValue * 0; break;
-            case("+/-"): displayValue = displayValue * -1; break;
-            case("%"): displayValue = displayValue * 0.01; break;
-            default: break;
+            calculatorLogic.setNumber(displayValue)
+            if let result = calculatorLogic.calculate(symbol: calcMethod) {
+                displayValue = result
             }
         }
     }
